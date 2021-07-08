@@ -1,5 +1,8 @@
 export const UserActionTypes = {
     EmailSignInStart:'EmailSignInStart',
     SignInSuccess:'SignInSuccess',
-    SignInFailure:'SignInFailure'
+    SignInFailure:'SignInFailure',
+    EmailSignUpStart:'EmailSignUpStart',
+    SignUpSuccess:'SignUpSuccess',
+    SignUpFailure:'SignUpFailure',
 }

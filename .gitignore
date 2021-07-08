@@ -3,6 +3,7 @@
 # dependencies
 /server/node_modules
 /client/node_modules
+/VIDEOS
 /.pnp
 .pnp.js
 

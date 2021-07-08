@@ -2,17 +2,16 @@ import React,{useState} from 'react';
 import { connect } from 'react-redux';
 import FormInput from '../FormInput/FormInput.component'
 import CustomButton from '../CustomButton/CustomButton.component';
-import {emailSignInStart} from '../../redux/user/user.actions'
+import { emailSignUpStart } from '../../redux/user/user.actions';
 
-const SignIn = ({EmailSignInStart})=>{
-    const [credentials,setCredentials]=useState({email:'',password:''})
-    const {email,password}=credentials;
 
+const SignUp = ({emailSignUpStart})=>{
+    const [credentials,setCredentials]=useState({email:'',password:'',firstName:'',lastName:''})
+    const {email,password,firstName,lastName}=credentials;
 
     const handleSubmit= async event=>{
         event.preventDefault();
-        console.log("We will make a store,redux-saga, and then do the authentication process")
-        EmailSignInStart(email,password);
+        emailSignUpStart({email,password,firstName,lastName})
     }
 
     const handleChange=event=>{
@@ -24,6 +23,22 @@ const SignIn = ({EmailSignInStart})=>{
     return(
         <div>
             <form onSubmit={handleSubmit}>
+                    <FormInput
+                        name='firstName'
+                        type='string'
+                        handleChange={handleChange}
+                        value={firstName}
+                        label='firstName'
+                        required
+                    />
+                     <FormInput
+                        name='lastName'
+                        type='string'
+                        handleChange={handleChange}
+                        value={lastName}
+                        label='lastName'
+                        required
+                    />
                     <FormInput
                         name='email'
                         type='email'
@@ -41,15 +56,15 @@ const SignIn = ({EmailSignInStart})=>{
                         required
                     />
                     <div className='buttons'>
-                    <CustomButton type='submit' value='Submit Form'>Sign In</CustomButton>
+                    <CustomButton type='submit' value='Submit Form'>Sign Up</CustomButton>
                     </div>
                 </form>
         </div>
     )
 }
 
-const mapDispatchToProps = (dispatch)=>({
-    EmailSignInStart : (email,password)=>dispatch(emailSignInStart({email,password}))
+const mapDispatchToProps=(dispatch)=>({
+    emailSignUpStart:(payload)=>{dispatch(emailSignUpStart(payload))}
 })
 
-export default connect(null,mapDispatchToProps)(SignIn)
+export default connect(null,mapDispatchToProps)(SignUp)

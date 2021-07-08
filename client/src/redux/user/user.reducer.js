@@ -17,7 +17,17 @@ const userReducer =(state=initial_state,action)=>{
                 currentUser:null,
                 error:action.payload
             }
-        
+        case UserActionTypes.SignUpSuccess:
+            return{
+                ...state,
+                currentUser:action.payload
+            }
+        case UserActionTypes.SignUpFailure:
+            return{
+                ...state,
+                currentUser:null,
+                error:action.payload
+            }
         default:
             return{
                 ...state

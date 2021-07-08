@@ -17,10 +17,27 @@ function* emailSignInHandler({payload}){
     }
 }
 
+function* emailSignUpHandler({payload}){
+    try{
+        const response=yield axios({
+            method: 'post',
+            url: '/user/auth/signup',
+            data: payload
+        })
+        console.log(response)
+    }catch(error){
+        console.log(error);
+    }
+}
+
  function* EmailSignInStart(){
    yield takeEvery(UserActionTypes.EmailSignInStart,emailSignInHandler);
 }
 
+function* EmailSignUpStart(){
+    yield takeEvery(UserActionTypes.EmailSignUpStart,emailSignUpHandler);
+}
+
 export function* rootUserSaga(){
-    yield all([call(EmailSignInStart)]);
+    yield all([call(EmailSignInStart),call(EmailSignUpStart)]);
 }

@@ -30,6 +30,7 @@ app.use(bodyParser.urlencoded({extended:true})) // this will remove all extra sp
 
 
 app.use('/user/auth',require('./router/SIgnIn_SignUp'));
+app.use('/user/videos',require('./router/VideoFiles'));
 
 
 // if(process.env.NODE_ENV!='production') require('dotenv').config() 	// this line sets the environment variables
