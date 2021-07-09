@@ -2,6 +2,8 @@ const express=require('express');
 const router = express.Router();
 const mongoose=require('mongoose');
 var multer  = require('multer')
+const {checkAuth}=require('../middlewares/Auth_related');
+
 var storage=multer.diskStorage({
     destination:function(req,file,cb){
         cb(null,'../VIDEOS')
@@ -17,7 +19,7 @@ const upload=multer({
     },
 })
 
-router.post('/upload_video',(req,res)=>{
+router.post('/upload_video',checkAuth,(req,res)=>{
         upload.single('userFile')(req,res,function(err){
             if (err instanceof multer.MulterError) {
                 console.log(err);

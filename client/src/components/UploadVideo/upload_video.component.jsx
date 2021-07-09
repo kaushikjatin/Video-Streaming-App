@@ -3,13 +3,19 @@ import { connect } from 'react-redux';
 import CustomButton from '../CustomButton/CustomButton.component';
 import {FileUploadStart} from '../../redux/fileUploader/file.actions'
 
-const UploadVideo = ({FileUploadStart})=>{
+const UploadVideo = (props)=>{
     const [selectedFile,setSelectedFile]=useState('')
-
-
+    let {FileUploadStart,token,token_issue_time}=props;
+    token='bearer '+token;
     const handleSubmit= async event=>{
         event.preventDefault();
-        FileUploadStart(selectedFile);
+         const hours_diff=Math.abs(new Date() - token_issue_time)/36e5;
+        if(hours_diff>1){
+            props.history.push('/signin');
+        }
+        else{
+            FileUploadStart(selectedFile,token,token_issue_time);
+        }
     }
 
     const handleChange=event=>{
@@ -42,7 +48,14 @@ const UploadVideo = ({FileUploadStart})=>{
 }
 
 const mapDispatchToProps=(dispatch)=>({
-    FileUploadStart:(selectedFile)=>{dispatch(FileUploadStart(selectedFile))}
+    FileUploadStart:(selectedFile,token)=>{dispatch(FileUploadStart({selectedFile,token}))}
 })
 
-export default connect(null,mapDispatchToProps)(UploadVideo);
+const mapStateToProps = (state)=>{
+    return{
+        token:state.user.token,
+        token_issue_time:'bearer '+state.user.time
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(UploadVideo);

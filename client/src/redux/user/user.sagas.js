@@ -11,7 +11,7 @@ function* emailSignInHandler({payload}){
             url: '/user/auth/signin',
             data: payload
         })
-        console.log(response)
+        yield put(signInSuccess(response.data));
     }catch(error){
         console.log(error);
     }

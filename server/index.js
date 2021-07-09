@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const app=express(); 
 const mongoose = require('mongoose')
 const url = `mongodb+srv://kaushikjatin:R070573k@cluster0.kzavz.mongodb.net/VideoStreamingApp?retryWrites=true&w=majority`;
+const dotenv=require('dotenv');
+dotenv.config();
 const connectionParams={
     useNewUrlParser: true,
     useCreateIndex: true,

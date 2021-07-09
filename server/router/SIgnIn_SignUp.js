@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose=require('mongoose');
 const bcrypt=require('bcrypt');
 const User=require('../modals/user');
-
+const jwt=require('jsonwebtoken');
 
 router.post('/signup',(req,res)=>{
     const {email,password,firstName,lastName}=req.body;
@@ -40,7 +40,14 @@ router.post('/signin',(req,res)=>{
         else{
             const hash=user[0].password
             bcrypt.compare(password, hash,(err, result)=>{
-                if(result==true){res.status(200).send({message:'Welcome'})}
+                if(result==true)
+                {
+                    const jwt_token=jwt.sign({email:email},process.env.SECRET_KEY_JWT);
+                    res.status(200).json({
+                        token:jwt_token,
+                        firstName:user[0].firstName
+                    });
+                }
                 else {res.status(401).send({message:'Wrong Username Or Password'})};
                 });
         }

@@ -5,11 +5,13 @@ import axios from "axios";
 function* FileUploadHandler({payload}){
     try{
         var formData=new FormData();
-        formData.append('userFile',payload);
+        formData.append('userFile',payload.selectedFile);
+        const headers={'authorization':payload.token}
         const response=yield axios({
             method: 'post',
             url: '/user/videos/upload_video',
-            data: formData
+            data: formData,
+            headers:headers
         })
         console.log(response)
     }catch(error){

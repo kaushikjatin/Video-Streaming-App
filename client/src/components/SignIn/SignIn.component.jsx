@@ -4,8 +4,9 @@ import FormInput from '../FormInput/FormInput.component'
 import CustomButton from '../CustomButton/CustomButton.component';
 import {emailSignInStart} from '../../redux/user/user.actions'
 
-const SignIn = ({EmailSignInStart})=>{
+const SignIn = (props)=>{
     const [credentials,setCredentials]=useState({email:'',password:''})
+    const {EmailSignInStart}=props;
     const {email,password}=credentials;
 
 
@@ -18,6 +19,10 @@ const SignIn = ({EmailSignInStart})=>{
     const handleChange=event=>{
         const {value,name}=event.target;
         setCredentials({...credentials,[name]:value})
+    }
+
+    const handleClick=()=>{
+        props.history.push('/upload_video');
     }
   
 
@@ -44,6 +49,8 @@ const SignIn = ({EmailSignInStart})=>{
                     <CustomButton type='submit' value='Submit Form'>Sign In</CustomButton>
                     </div>
                 </form>
+
+                <button onClick={handleClick}>GO TO UPLOAD</button>
         </div>
     )
 }

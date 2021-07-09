@@ -10,9 +10,9 @@ export const signInFailure = (error)=>({
     payload:error
 })
 
-export const signInSuccess = (user)=>({
+export const signInSuccess = (response)=>({
     type:UserActionTypes.SignInSuccess,
-    payload:user
+    payload:response
 })
 
 export const emailSignUpStart=({email,password,firstName,lastName})=>({
