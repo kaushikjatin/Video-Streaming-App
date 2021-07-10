@@ -42,7 +42,7 @@ router.post('/signin',(req,res)=>{
             bcrypt.compare(password, hash,(err, result)=>{
                 if(result==true)
                 {
-                    const jwt_token=jwt.sign({email:email},process.env.SECRET_KEY_JWT);
+                    const jwt_token=jwt.sign({email:email,firstName:user[0].firstName},process.env.SECRET_KEY_JWT);
                     res.status(200).json({
                         token:jwt_token,
                         firstName:user[0].firstName

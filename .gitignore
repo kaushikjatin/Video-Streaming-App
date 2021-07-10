@@ -3,8 +3,8 @@
 # dependencies
 /server/node_modules
 /client/node_modules
-/VIDEOS
-/THUMBNAILS
+server/UPLOADS/VIDEOS
+server/UPLOADS/THUMBNAILS
 /server/.env
 /.pnp
 .pnp.js
