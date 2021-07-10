@@ -30,7 +30,7 @@ app.use(bodyParser.json()) //this middleware will convert the body of every requ
 app.use(bodyParser.urlencoded({extended:true})) // this will remove all extra space and other symbols from the request url.
 
 
-
+app.use(express.static('../VIDEOS'));
 app.use('/user/auth',require('./router/SIgnIn_SignUp'));
 app.use('/user/videos',require('./router/VideoFiles'));
 

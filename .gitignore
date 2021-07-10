@@ -4,6 +4,8 @@
 /server/node_modules
 /client/node_modules
 /VIDEOS
+/THUMBNAILS
+/server/.env
 /.pnp
 .pnp.js
 
