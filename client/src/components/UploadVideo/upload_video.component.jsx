@@ -6,7 +6,6 @@ import {FileUploadStart} from '../../redux/fileUploader/file.actions'
 const UploadVideo = (props)=>{
     const [selectedFile,setSelectedFile]=useState('')
     let {FileUploadStart,token,token_issue_time}=props;
-    token='bearer '+token;
     const handleSubmit= async event=>{
         event.preventDefault();
          const hours_diff=Math.abs(new Date() - token_issue_time)/36e5;
@@ -19,8 +18,8 @@ const UploadVideo = (props)=>{
     }
 
     const handleChange=event=>{
-        if(event.target.files[0].size>52428800)
-            alert("File size must be <50Mb");
+        if(event.target.files[0].size>52428800*1024)
+            alert("File size must be <50Gb");
         else{
             setSelectedFile(event.target.files[0]);
         }
@@ -53,8 +52,8 @@ const mapDispatchToProps=(dispatch)=>({
 
 const mapStateToProps = (state)=>{
     return{
-        token:state.user.token,
-        token_issue_time:'bearer '+state.user.time
+        token:'bearer '+state.user.token,
+        token_issue_time:state.user.time
     }
 }
 

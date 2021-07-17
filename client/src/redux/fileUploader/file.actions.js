@@ -1,8 +1,8 @@
 import {FileActionTypes} from './file.types';
 
-export const FileUploadStart=(selectedFile)=>({
+export const FileUploadStart=(payload)=>({
     type:FileActionTypes.FileUploadStart,
-    payload:selectedFile
+    payload:payload
 })
 
 export const FileUploadSuccess=(uploadedFile)=>({

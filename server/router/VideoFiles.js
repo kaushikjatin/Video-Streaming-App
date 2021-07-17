@@ -25,6 +25,30 @@ const upload=multer({
 })
 
 
+router.get('/videos_list',checkAuth,(req,res)=>{
+  Video.find({},function(err,videos){
+    if(err)
+    {
+        res.status(500).json({message:'Internal Server Error'});
+    }
+    else
+    {
+      var response=videos.map(function(video_obj){
+          const new_obj={
+            title:video_obj.title,
+            video_path:video_obj.video_path,
+            author_name:video_obj.author_name,
+            thumbnail_path:video_obj.thumbnail_path
+          }
+          return new_obj;
+      })
+      console.log(response);
+      res.status(200).send({videos:response});
+    }
+  })
+})
+
+
 router.post('/upload_video',checkAuth,(req,res)=>{
         upload.single('userFile')(req,res,function(err){
             if (err) 
@@ -37,9 +61,9 @@ router.post('/upload_video',checkAuth,(req,res)=>{
                 const destination='./UPLOADS/THUMBNAILS/'+'userFile'+'-'+time+'.png';
                 generateThumbnail(video_path,destination);
                 var video_obj={
-                  title:'Temp_title',
-                  video_path:'http://localhost:8000' + '/api/videos/'+'userFile'+'-'+time+'.mp4',
-                  thumbnail_path:'http://localhost:8000' + '/api/thumbnails/'+'userFile'+'-'+time+'.png',
+                  title:'Temp_title'+time,
+                  video_path:'userFile'+'-'+time+'.mp4',
+                  thumbnail_path:'/api/thumbnails/'+'userFile'+'-'+time+'.png',
                   author_name:req.user.firstName
                 }
                 Video.create(video_obj,function(err,new_video){

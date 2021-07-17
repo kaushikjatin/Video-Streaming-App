@@ -51,6 +51,7 @@ const SignIn = (props)=>{
                 </form>
 
                 <button onClick={handleClick}>GO TO UPLOAD</button>
+                <button onClick={()=>(props.history.push('/videos'))}>GO TO VIDEOS</button>
         </div>
     )
 }
