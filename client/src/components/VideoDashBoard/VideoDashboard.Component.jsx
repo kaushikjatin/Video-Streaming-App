@@ -1,11 +1,11 @@
-import React,{useState,useEffect} from 'react';
+import React,{useEffect} from 'react';
 import { connect } from 'react-redux';
 import {fetchVideosStart} from '../../redux/videoDashboard/videoDashboard.actions';
 import {Link} from 'react-router-dom'
 
 const VideoDashboard = ({Video_objects,fetchVideosStart,token,token_issue_time,history})=>{
     useEffect(()=>{
-        const hours_diff=Math.abs(new Date() - token_issue_time)/36e5;
+        const hours_diff=Math.abs(new Date().getTime() - new Date(token_issue_time).getTime())/(1000 * 60 * 60);
         if(hours_diff>1){
             history.push('/signin');
         }
@@ -13,7 +13,7 @@ const VideoDashboard = ({Video_objects,fetchVideosStart,token,token_issue_time,h
             console.log(token);
             fetchVideosStart(token,token_issue_time);
         }
-    },[])
+    },[token_issue_time,token,fetchVideosStart,Video_objects,history])
 
     return(
         <div className='videos_dashboard_container'>

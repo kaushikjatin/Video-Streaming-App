@@ -1,4 +1,4 @@
-import {takeLatest, put, call, take, all, takeEvery} from 'redux-saga/effects';
+import {put, call, all, takeEvery} from 'redux-saga/effects';
 import {VideoDashboardActionTypes} from './videoDashboard.types';
 import {fetchVideosSuccess,fetchVideosFailure} from './videoDashboard.actions';
 import axios from 'axios'

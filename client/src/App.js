@@ -4,10 +4,13 @@ import SignUp from './components/SignUp/SignUp.component';
 import UploadVideo from './components/UploadVideo/upload_video.component'
 import VideoDashBoard from './components/VideoDashBoard/VideoDashboard.Component'
 import VideoPlayer from './components/VideoPlayer/VideoPlayer.component';
+import Navbar from './components/Navbar/Navbar.component';
+
 
 function App() {
   return (
     <div className="App">
+      <Navbar></Navbar>
       <Route exact path='/' component={SignIn}></Route>
       <Route exact path='/signin' component={SignIn}></Route>
       <Route exact path='/signup' component={SignUp}></Route>

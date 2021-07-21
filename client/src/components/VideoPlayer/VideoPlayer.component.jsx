@@ -9,8 +9,8 @@ const VideoPlayer = (props) => {
     responsive: true,
     fluid: true,
     sources: [{
-      src: 'http://localhost:8000/api/videos/' + props.match.params.title,
-      type: 'video/mp4'
+      src: 'http://localhost:8000/user/videos/' + props.match.params.title,
+      type: "video/mp4"
     }]
   }
   
@@ -18,6 +18,9 @@ const VideoPlayer = (props) => {
     <>
       <div>Rest of app here</div>
       
+      {/* <video id="videoPlayer" width="650" controls muted="muted" autoPlay>
+           <source src={'http://localhost:8000/user/videos/' + props.match.params.title} type="video/mp4" />
+      </video> */}
       <VideoJS { ...videoJsOptions }/>
       
       <div>Rest of app here</div>

@@ -8,7 +8,7 @@ const UploadVideo = (props)=>{
     let {FileUploadStart,token,token_issue_time}=props;
     const handleSubmit= async event=>{
         event.preventDefault();
-         const hours_diff=Math.abs(new Date() - token_issue_time)/36e5;
+        const hours_diff=Math.abs(new Date().getTime() - new Date(token_issue_time).getTime())/(1000 * 60 * 60);
         if(hours_diff>1){
             props.history.push('/signin');
         }

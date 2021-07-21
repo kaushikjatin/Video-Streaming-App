@@ -8,7 +8,7 @@ function* FileUploadHandler({payload}){
         formData.append('userFile',payload.selectedFile);
         const headers={'authorization':payload.token}
         const response=yield axios({
-            method: 'post',
+            method: 'post', 
             url: '/user/videos/upload_video',
             data: formData,
             headers:headers
