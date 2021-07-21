@@ -6,9 +6,15 @@ var User=require('../modals/user');
 var Video=require('../modals/videos');
 const {checkAuth}=require('../middlewares/Auth_related');
 const {generateThumbnail}=require('../helpers/generateThumbnail')
+const fs=require('fs-extra');
+const path = require('path'); 
 
 
+
+const storagePath='./UPLOADS/VIDEOS'
 var time=Date.now();
+
+
 var storage=multer.diskStorage({
     destination:function(req,file,cb){
         cb(null,'./UPLOADS/VIDEOS')
@@ -20,10 +26,34 @@ var storage=multer.diskStorage({
 const upload=multer({
     storage:storage,
     limits:{
-        fileSize:50*1024*1024
+        fileSize:50*1024*1024*1024
     },
 })
 
+
+router.get('/:file_name',(req,res)=>{
+      const range = req.headers.range;
+      if (!range) {
+        console.log("came here");
+        res.status(400).send("Requires Range header");
+      }
+      const videoPath='/Users/jatinkaushik/Web Projects/MERN STACK/Video-Streaming-App/server/UPLOADS/VIDEOS/'+req.params.file_name;
+      const videoSize = fs.statSync(videoPath).size;
+      const CHUNK_SIZE = 10 ** 6; // 1MB
+      const start = Number(range.replace(/\D/g, ""));
+      const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
+      const contentLength = end - start + 1;
+      const headers = {
+        "Content-Range": `bytes ${start}-${end}/${videoSize}`,
+        "Accept-Ranges": "bytes",
+        "Content-Length": contentLength,
+        "Content-Type": "video/mp4",
+      };
+      res.writeHead(206, headers);
+      const videoStream = fs.createReadStream(videoPath, { start, end });
+      console.log("send a good response");
+      videoStream.pipe(res);
+})
 
 router.get('/videos_list',checkAuth,(req,res)=>{
   Video.find({},function(err,videos){
@@ -50,13 +80,20 @@ router.get('/videos_list',checkAuth,(req,res)=>{
 
 
 router.post('/upload_video',checkAuth,(req,res)=>{
-        upload.single('userFile')(req,res,function(err){
-            if (err) 
-            {
-                res.status(500).json({message:'An Internal Error occured while uploading file'})
-            }
-            else
-            {
+
+    try{
+      req.pipe(req.busboy);
+        req.busboy.on('file', (fieldname, file, filename) => {
+          console.log(`Upload of '${filename}' started`);
+          fileName=fieldname+'-' + time+'.mp4';
+          // Create a write stream of the new file
+          const fstream = fs.createWriteStream(path.join(storagePath, fileName));
+          // Pipe it trough
+          file.pipe(fstream);
+   
+          // On finish of the upload
+          fstream.on('close', () => {
+                console.log(`Upload of '${fileName}' finished`);
                 const video_path='./UPLOADS/VIDEOS/' +'userFile'+'-'+time+'.mp4';
                 const destination='./UPLOADS/THUMBNAILS/'+'userFile'+'-'+time+'.png';
                 generateThumbnail(video_path,destination);
@@ -83,8 +120,12 @@ router.post('/upload_video',checkAuth,(req,res)=>{
                     })
                   }
                 })
-            }
-        })
+          });
+      });
+    }catch(error){
+      console.log(err);
+      res.status(500).json({message:'An Internal Error occured while uploading file'})
+    }
         time=Date.now();
 })
 

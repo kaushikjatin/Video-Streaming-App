@@ -6,6 +6,8 @@ const mongoose = require('mongoose')
 const url = `mongodb+srv://kaushikjatin:R070573k@cluster0.kzavz.mongodb.net/VideoStreamingApp?retryWrites=true&w=majority`;
 const dotenv=require('dotenv');
 const path = require('path');
+const busboy = require('connect-busboy');
+const fs=require('fs-extra');
 dotenv.config();
 const connectionParams={
     useNewUrlParser: true,
@@ -29,6 +31,9 @@ mongoose.connect(url,connectionParams)
 app.use(cors())
 app.use(bodyParser.json()) //this middleware will convert the body of every request to the json format
 app.use(bodyParser.urlencoded({extended:true})) // this will remove all extra space and other symbols from the request url.
+app.use(busboy({
+    highWaterMark: 2 * 1024 * 1024, // Set 2MiB buffer
+}));
 
 console.log(path.join(__dirname, 'UPLOADS/VIDEOS'))
 app.use('/api/videos',express.static(path.join(__dirname, 'UPLOADS/VIDEOS')));
