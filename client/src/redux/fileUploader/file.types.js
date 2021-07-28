@@ -1,5 +1,6 @@
 export const FileActionTypes={
     FileUploadStart:'FileUploadStart',
     FileUploadSuccess:'FileUploadSuccess',
-    FileUploadFailure:'FileUploadFailure'
+    FileUploadFailure:'FileUploadFailure',
+    SetFileUploadBar:'SetFileUploadBar'
 }

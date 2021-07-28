@@ -5,6 +5,7 @@ import UploadVideo from './components/UploadVideo/upload_video.component'
 import VideoDashBoard from './components/VideoDashBoard/VideoDashboard.Component'
 import VideoPlayer from './components/VideoPlayer/VideoPlayer.component';
 import Navbar from './components/Navbar/Navbar.component';
+import './App.scss';
 
 
 function App() {

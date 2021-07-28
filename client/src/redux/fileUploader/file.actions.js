@@ -5,13 +5,17 @@ export const FileUploadStart=(payload)=>({
     payload:payload
 })
 
-export const FileUploadSuccess=(uploadedFile)=>({
-    type:FileActionTypes.FileUploadSuccess,
-    payload:uploadedFile
+export const FileUploadSuccess=()=>({
+    type:FileActionTypes.FileUploadSuccess
 })
 
 export const FileUploadFailure=(error)=>({
     type:FileActionTypes.FileUploadFailure,
     payload:error
+})
+
+export const SetFileUploadBar=(payload)=>({
+    type:FileActionTypes.SetFileUploadBar,
+    payload:payload
 })
 

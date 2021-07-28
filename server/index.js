@@ -7,7 +7,6 @@ const url = `mongodb+srv://kaushikjatin:R070573k@cluster0.kzavz.mongodb.net/Vide
 const dotenv=require('dotenv');
 const path = require('path');
 const busboy = require('connect-busboy');
-const fs=require('fs-extra');
 dotenv.config();
 const connectionParams={
     useNewUrlParser: true,
@@ -48,4 +47,3 @@ app.use('/user/videos',require('./router/VideoFiles'));
 // const port = process.env.PORT || 5000		// if it it hosted on heroku then it will take the port of heroku otherwise 5000
 
 app.listen(8000);
-

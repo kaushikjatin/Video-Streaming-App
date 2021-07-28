@@ -1,6 +1,6 @@
 import { FileActionTypes } from "./file.types";
 const inital_state={
-    uploadedFiles:[]
+    uploaded:0
 }
 
 const FileReducer=(state=inital_state,action)=>{
@@ -8,12 +8,21 @@ const FileReducer=(state=inital_state,action)=>{
         case FileActionTypes.FileUploadSuccess:
             return{
                 ...state,
-                uploadedFiles:uploadedFiles.append(action.payload)
+                uploaded:0
             }
         case FileActionTypes.FileUploadFailure:
             return{
                 ...state,
                 error:action.payload
+            }
+        case FileActionTypes.SetFileUploadBar:
+            return{
+                ...state,
+                uploaded:action.payload
+            }
+        default:
+            return{
+                ...state
             }
     }
 }

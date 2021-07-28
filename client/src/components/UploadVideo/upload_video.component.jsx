@@ -2,10 +2,16 @@ import React,{useState} from 'react';
 import { connect } from 'react-redux';
 import CustomButton from '../CustomButton/CustomButton.component';
 import {FileUploadStart} from '../../redux/fileUploader/file.actions'
+import Form from 'react-bootstrap/Form'
+import Button  from 'react-bootstrap/esm/Button';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import './upload_video.styles.scss'
 
 const UploadVideo = (props)=>{
     const [selectedFile,setSelectedFile]=useState('')
-    let {FileUploadStart,token,token_issue_time}=props;
+    let {FileUploadStart,token,token_issue_time,uploaded}=props;
+
+    
     const handleSubmit= async event=>{
         event.preventDefault();
         const hours_diff=Math.abs(new Date().getTime() - new Date(token_issue_time).getTime())/(1000 * 60 * 60);
@@ -23,25 +29,24 @@ const UploadVideo = (props)=>{
         else{
             setSelectedFile(event.target.files[0]);
         }
-        
     }
   
 
     return(
-        <div>
-            <form onSubmit={handleSubmit}>
-                    <input
-                        name='file'
-                        type='file'
-                        onChange={handleChange}
-                        label='file'
-                        accept='video/*'
-                        required
-                    />
-                    <div className='buttons'>
-                    <CustomButton type='submit' value='Submit Form'>Upload Video</CustomButton>
-                    </div>
-                </form>
+        <div className='file_form'>
+            <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formFileLg" className="mb-3">
+                    <Form.Label>Upload A Video</Form.Label>
+                    <Form.Control name='file' onChange={handleChange} accept='video/*' type="file" size="lg" />
+                </Form.Group>
+
+                <div className="d-grid gap-2">
+                    <Button variant="primary" type="submit" className='submit_button'>
+                        Submit
+                    </Button>
+                </div>
+          </Form>
+          <ProgressBar className='progress_bar' animated variant="success" now={uploaded} />
         </div>
     )
 }
@@ -53,7 +58,8 @@ const mapDispatchToProps=(dispatch)=>({
 const mapStateToProps = (state)=>{
     return{
         token:'bearer '+state.user.token,
-        token_issue_time:state.user.time
+        token_issue_time:state.user.time,
+        uploaded:state.uploaded_file.uploaded
     }
 }
 

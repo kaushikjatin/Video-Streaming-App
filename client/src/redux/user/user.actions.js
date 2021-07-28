@@ -29,3 +29,7 @@ export const signUpSuccess = (user)=>({
     type:UserActionTypes.SignUpSuccess,
     payload:user
 })
+
+export const signOut=()=>({
+    type:UserActionTypes.SignOut
+})

@@ -9,3 +9,5 @@
 9) Make responsive
 10) Include the thumbnail inside the dashboard
 12) Watch the parameters passed in the useEffect() inside VideoDashboard.component.
+13) Optimise app while uploading any larger size file    >>>>>>>>>>>>>>>>>>>>>
+14) Optimize app while streaming any larger file    >>>>>>>>>>>>>>>>>>>>>

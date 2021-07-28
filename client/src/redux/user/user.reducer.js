@@ -30,6 +30,13 @@ const userReducer =(state=initial_state,action)=>{
                 ...state,
                 error:action.payload
             }
+        case UserActionTypes.SignOut:
+            return{
+                ...state,
+                currentUser:null,
+                token:null,
+                time:null
+            }
         default:
             return state;
     }

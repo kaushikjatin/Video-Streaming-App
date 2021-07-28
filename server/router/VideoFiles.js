@@ -16,7 +16,7 @@ var time=Date.now();
 
 
 var storage=multer.diskStorage({
-    destination:function(req,file,cb){
+    destination:function(req,file,cœb){
         cb(null,'./UPLOADS/VIDEOS')
     },
     filename: function (req, file, cb) {
@@ -28,6 +28,29 @@ const upload=multer({
     limits:{
         fileSize:50*1024*1024*1024
     },
+})
+
+router.get('/videos_list',checkAuth,(req,res)=>{
+  Video.find({},function(err,videos){
+    if(err)
+    {
+        res.status(500).json({message:'Internal Server Error'});
+    }
+    else
+    {
+      var response=videos.map(function(video_obj){
+          const new_obj={
+            title:video_obj.title,
+            video_path:video_obj.video_path,
+            author_name:video_obj.author_name,
+            thumbnail_path:video_obj.thumbnail_path
+          }
+          return new_obj;
+      })
+      console.log(response);
+      res.status(200).send({videos:response});
+    }
+  })
 })
 
 
@@ -55,28 +78,7 @@ router.get('/:file_name',(req,res)=>{
       videoStream.pipe(res);
 })
 
-router.get('/videos_list',checkAuth,(req,res)=>{
-  Video.find({},function(err,videos){
-    if(err)
-    {
-        res.status(500).json({message:'Internal Server Error'});
-    }
-    else
-    {
-      var response=videos.map(function(video_obj){
-          const new_obj={
-            title:video_obj.title,
-            video_path:video_obj.video_path,
-            author_name:video_obj.author_name,
-            thumbnail_path:video_obj.thumbnail_path
-          }
-          return new_obj;
-      })
-      console.log(response);
-      res.status(200).send({videos:response});
-    }
-  })
-})
+
 
 
 router.post('/upload_video',checkAuth,(req,res)=>{

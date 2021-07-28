@@ -1,8 +1,9 @@
 import React,{useState} from 'react';
 import { connect } from 'react-redux';
-import FormInput from '../FormInput/FormInput.component'
-import CustomButton from '../CustomButton/CustomButton.component';
 import {emailSignInStart} from '../../redux/user/user.actions'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import './SignIn.styles.scss'
 
 const SignIn = (props)=>{
     const [credentials,setCredentials]=useState({email:'',password:''})
@@ -14,6 +15,7 @@ const SignIn = (props)=>{
         event.preventDefault();
         console.log("We will make a store,redux-saga, and then do the authentication process")
         EmailSignInStart(email,password);
+        setCredentials({email:'',password:''})
     }
 
     const handleChange=event=>{
@@ -27,31 +29,25 @@ const SignIn = (props)=>{
   
 
     return(
-        <div>
-            <form onSubmit={handleSubmit}>
-                    <FormInput
-                        name='email'
-                        type='email'
-                        handleChange={handleChange}
-                        value={email}
-                        label='email'
-                        required
-                    />
-                    <FormInput
-                        name='password'
-                        type='password'
-                        value={password}
-                        handleChange={handleChange}
-                        label='password'
-                        required
-                    />
-                    <div className='buttons'>
-                    <CustomButton type='submit' value='Submit Form'>Sign In</CustomButton>
-                    </div>
-                </form>
+        <div className='signin_form'>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email" placeholder="Email" name="email" onChange={handleChange}  value={email} required/>
+                        <Form.Text className="text-muted">
+                        We'll never share your email with anyone else.
+                        </Form.Text>
+                    </Form.Group>
 
-                <button onClick={handleClick}>GO TO UPLOAD</button>
-                <button onClick={()=>(props.history.push('/videos'))}>GO TO VIDEOS</button>
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Password" name="password" onChange={handleChange}  value={password} required/>
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Submit
+                    </Button>
+                </Form>
+
         </div>
     )
 }
