@@ -17,11 +17,11 @@ function* fetchVideosHandler({payload}){
         yield put(fetchVideosSuccess(response.data.videos))
     }catch(error){
         console.log(error);
+        yield put(fetchVideosFailure(error));
     }
 }
 
 function* fetchVideosStart(){
-    console.log("herhe1")
     yield takeEvery(VideoDashboardActionTypes.fetchVideosStart,fetchVideosHandler)
 }
 

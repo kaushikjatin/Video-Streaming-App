@@ -9,7 +9,7 @@ let emit;
 
 const onUploadProgress=(progressEvent)=>{
     let completed=Math.round((progressEvent.loaded * 100) / progressEvent.total);
-    if(completed==100)
+    if(completed===100)
         emit(END);
     else 
         emit(completed);
@@ -36,7 +36,7 @@ function* FileUploadHandler({payload}){
         var formData=new FormData();
         formData.append('userFile',payload.selectedFile);
         const headers={'authorization':payload.token}
-        const uploadPromise=makeAxiosRequest(formData,headers,onUploadProgress);
+        makeAxiosRequest(formData,headers,onUploadProgress);
         while (true) {
             const data = yield take(channel);
             console.log(data);

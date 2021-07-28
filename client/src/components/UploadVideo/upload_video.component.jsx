@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
 import { connect } from 'react-redux';
-import CustomButton from '../CustomButton/CustomButton.component';
 import {FileUploadStart} from '../../redux/fileUploader/file.actions'
 import Form from 'react-bootstrap/Form'
 import Button  from 'react-bootstrap/esm/Button';

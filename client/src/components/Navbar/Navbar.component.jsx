@@ -1,24 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav'
 import { connect } from 'react-redux';
-import {signOut} from '../../redux/user/user.actions'
+import {signOut} from '../../redux/user/user.actions';
+import {Link} from 'react-router-dom'
 
 class Navbar extends React.Component{
 
     render(){
-        const {currentUser,signOut}=this.props;
+        var {currentUser,signOut}=this.props;
         return(
             <div className='navbar'>
                 <Nav fill variant="tabs">
                 <Nav.Item>
-                    <Nav.Link href="/">HOME</Nav.Link>
+                    <Nav.Link as={Link} to="/">HOME</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link eventKey="link-1" href="/upload_video">Upload Video</Nav.Link>
+                    <Nav.Link eventKey="link-1" as={Link} to="/upload_video">Upload Video</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link eventKey="link-2" href="/videos">Videos</Nav.Link>
+                    <Nav.Link eventKey="link-2" as={Link} to="/videos">Videos</Nav.Link>
                 </Nav.Item>
                 </Nav>
 
@@ -41,7 +41,7 @@ class Navbar extends React.Component{
                                 </Nav.Item>
                             ):(
                                     <Nav.Item>
-                                             <Nav.Link eventKey="link-3" href="/signin">Login</Nav.Link>
+                                             <Nav.Link eventKey="link-3" as={Link} to="/signin">Login</Nav.Link>
                                     </Nav.Item>
                             )
                     }
@@ -51,7 +51,7 @@ class Navbar extends React.Component{
                                 <div></div>
                             ):(
                                     <Nav.Item>
-                                             <Nav.Link eventKey="link-3" href="/signout">Register</Nav.Link>
+                                             <Nav.Link eventKey="link-3" as={Link} to="/signup">Register</Nav.Link>
                                     </Nav.Item>
                             )
                     }

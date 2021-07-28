@@ -14,6 +14,7 @@ function* emailSignInHandler({payload}){
         yield put(signInSuccess(response.data));
     }catch(error){
         console.log(error);
+        yield put(signInFailure());
     }
 }
 

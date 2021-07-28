@@ -23,11 +23,6 @@ const SignIn = (props)=>{
         setCredentials({...credentials,[name]:value})
     }
 
-    const handleClick=()=>{
-        props.history.push('/upload_video');
-    }
-  
-
     return(
         <div className='signin_form'>
                 <Form onSubmit={handleSubmit}>
