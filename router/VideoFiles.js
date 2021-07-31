@@ -55,6 +55,7 @@ router.get('/videos_list',checkAuth,(req,res)=>{
 
 
 router.get('/:file_name',(req,res)=>{
+      console.log("GOT A REQUEST>>>>>")
       const range = req.headers.range;
       if (!range) {
         console.log("came here");

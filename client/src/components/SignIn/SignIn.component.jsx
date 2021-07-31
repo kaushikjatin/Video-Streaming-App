@@ -14,7 +14,7 @@ const SignIn = (props)=>{
     const handleSubmit= async event=>{
         event.preventDefault();
         console.log("We will make a store,redux-saga, and then do the authentication process")
-        EmailSignInStart(email,password);
+        EmailSignInStart(email,password,props.history);
         setCredentials({email:'',password:''})
     }
 
@@ -48,7 +48,7 @@ const SignIn = (props)=>{
 }
 
 const mapDispatchToProps = (dispatch)=>({
-    EmailSignInStart : (email,password)=>dispatch(emailSignInStart({email,password}))
+    EmailSignInStart : (email,password,history)=>dispatch(emailSignInStart({email,password,history}))
 })
 
 export default connect(null,mapDispatchToProps)(SignIn)

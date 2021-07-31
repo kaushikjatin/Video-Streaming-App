@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import { connect } from 'react-redux';
-import {FileUploadStart} from '../../redux/fileUploader/file.actions'
+import {FileUploadStart,SetFileUploadBar} from '../../redux/fileUploader/file.actions'
 import Form from 'react-bootstrap/Form'
 import Button  from 'react-bootstrap/esm/Button';
 import ProgressBar from 'react-bootstrap/ProgressBar';
@@ -8,7 +8,7 @@ import './upload_video.styles.scss'
 
 const UploadVideo = (props)=>{
     const [selectedFile,setSelectedFile]=useState('')
-    let {FileUploadStart,token,token_issue_time,uploaded}=props;
+    let {FileUploadStart,SetFileUploadBar,token,token_issue_time,uploaded}=props;
 
     
     const handleSubmit= async event=>{
@@ -23,6 +23,7 @@ const UploadVideo = (props)=>{
     }
 
     const handleChange=event=>{
+        SetFileUploadBar(0);
         if(event.target.files[0].size>52428800*1024)
             alert("File size must be <50Gb");
         else{
@@ -33,6 +34,11 @@ const UploadVideo = (props)=>{
 
     return(
         <div className='file_form'>
+            {
+                uploaded===100?
+                (<div className='file_status_message'>FILE UPLOADED SUCCESSFULLY!</div>):
+                (<span></span>)
+            }
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formFileLg" className="mb-3">
                     <Form.Label>Upload A Video</Form.Label>
@@ -51,7 +57,8 @@ const UploadVideo = (props)=>{
 }
 
 const mapDispatchToProps=(dispatch)=>({
-    FileUploadStart:(selectedFile,token)=>{dispatch(FileUploadStart({selectedFile,token}))}
+    FileUploadStart:(selectedFile,token)=>{dispatch(FileUploadStart({selectedFile,token}))},
+    SetFileUploadBar:(value)=>{dispatch(SetFileUploadBar(value))}
 })
 
 const mapStateToProps = (state)=>{

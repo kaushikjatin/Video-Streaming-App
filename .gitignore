@@ -1,11 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/server/node_modules
+/node_modules
 /client/node_modules
-server/UPLOADS/VIDEOS
-server/UPLOADS/THUMBNAILS
-/server/.env
+/UPLOADS/VIDEOS
+/UPLOADS/THUMBNAILS
+/.env
 /.pnp
 .pnp.js
 

@@ -7,8 +7,7 @@ const FileReducer=(state=inital_state,action)=>{
     switch(action.type){
         case FileActionTypes.FileUploadSuccess:
             return{
-                ...state,
-                uploaded:0
+                ...state
             }
         case FileActionTypes.FileUploadFailure:
             return{

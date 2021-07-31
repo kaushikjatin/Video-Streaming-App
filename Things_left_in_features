@@ -1,13 +1,17 @@
 1) Make token expiration   >>>>>>>>>>>>>>>>>
 2) Error codes and messaages sent from server, but not properly handled in frontend.
-3) Progress bar in the video-upload 
+3) Progress bar in the video-upload >>>>>>>>>>>>>>>
 4) Mongoose data validation is also to be added.
 5) Limiting the number of videos to be sent when get request for video_list
 6) Add a Navabr   >>>>>>>>>>>>>>>>>>
-7) Improve the field names inside forms
-8) Do Styling
-9) Make responsive
-10) Include the thumbnail inside the dashboard
-12) Watch the parameters passed in the useEffect() inside VideoDashboard.component.
+7) Improve the field names inside forms  
+8) Do Styling  >>>>>>>>>>>>>>>>>>>>>>
+9) Make responsive  >>>>>>>>>>>>>>>>>>>>
+10) Include the thumbnail inside the dashboard   >>>>>>>>>>>>>>>>>>>>>>>>
+12) Watch the parameters passed in the useEffect() inside VideoDashboard.component.  >>>>>>>>>>>>>>>>>
 13) Optimise app while uploading any larger size file    >>>>>>>>>>>>>>>>>>>>>
 14) Optimize app while streaming any larger file    >>>>>>>>>>>>>>>>>>>>>
+15) Enhance user experience by redirecting to sone page or an alert after signin and after uploading the video too. >>>>>>>>>>>>>>>>>>>
+16) Ensure that when user opens tab after 1 hour then it still hows it to be logged in because the state have value of currentUser in it,,,but in actual
+    the token time would have expired....(It means to show that Session has expired!)
+17) Make the Welcome Page.  >>>>>>>>>>>>>>>>>>>>>>>>>

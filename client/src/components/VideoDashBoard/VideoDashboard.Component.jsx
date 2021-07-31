@@ -29,7 +29,7 @@ const VideoDashboard = ({Video_objects,fetchVideosStart,token,token_issue_time,h
                         return <Col className='video_card' md="3" xs="12" sm="4" key={video.title}>
                                     <Card>
                                     <Link to={'/video/'+video.video_path}>
-                                    <Card.Img variant="top" src={"http://localhost:8000" + video.thumbnail_path} />
+                                    <Card.Img variant="top" src={video.thumbnail_path} />
                                     <Card.Body>
                                         <Card.Title>{video.title}</Card.Title>
                                     </Card.Body>

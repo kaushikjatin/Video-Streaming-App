@@ -1,8 +1,8 @@
 import { UserActionTypes } from "./user.actions.types";
 
-export const emailSignInStart=({email,password})=>({
+export const emailSignInStart=({email,password,history})=>({
     type:UserActionTypes.EmailSignInStart,
-    payload:{email,password}
+    payload:{email,password,history}
 })
 
 export const signInFailure = (error)=>({

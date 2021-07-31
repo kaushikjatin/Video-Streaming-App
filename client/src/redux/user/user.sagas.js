@@ -9,9 +9,10 @@ function* emailSignInHandler({payload}){
         const response=yield axios({
             method: 'post',
             url: '/user/auth/signin',
-            data: payload
+            data: {email:payload.email,password:payload.password}
         })
         yield put(signInSuccess(response.data));
+        payload.history.push('/');
     }catch(error){
         console.log(error);
         yield put(signInFailure());
