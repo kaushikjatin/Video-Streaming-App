@@ -4,15 +4,14 @@ const bodyParser = require('body-parser')
 const app=express(); 
 const mongoose = require('mongoose')
 const url = `mongodb+srv://kaushikjatin:R070573k@cluster0.kzavz.mongodb.net/VideoStreamingApp?retryWrites=true&w=majority`;
-const dotenv=require('dotenv');
 const path = require('path');
 const busboy = require('connect-busboy');
-dotenv.config();
 const connectionParams={
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true 
 }
+if(process.env.NODE_ENV!='production') require('dotenv').config()
 
 
 
@@ -34,7 +33,16 @@ app.use(busboy({
     highWaterMark: 2 * 1024 * 1024, // Set 2MiB buffer
 }));
 
-console.log(path.join(__dirname, 'UPLOADS/VIDEOS'))
+
+if(process.env.NODE_ENV=='production')
+{
+    app.use(express.static(path.join(__dirname,'client/build')));
+
+    app.get('*',function(req,res){
+        res.sendFile(path.join(__dirname,'client/build/index.html'));
+    })
+}
+
 app.use('/api/videos',express.static(path.join(__dirname, 'UPLOADS/VIDEOS')));
 app.use('/api/thumbnails',express.static(path.join(__dirname,'UPLOADS/THUMBNAILS')))
 
@@ -46,4 +54,5 @@ app.use('/user/videos',require('./router/VideoFiles'));
 // if(process.env.NODE_ENV!='production') require('dotenv').config() 	// this line sets the environment variables
 // const port = process.env.PORT || 5000		// if it it hosted on heroku then it will take the port of heroku otherwise 5000
 
-app.listen(8000);
+const port = process.env.PORT || 8000
+app.listen(port);
