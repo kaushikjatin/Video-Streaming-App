@@ -30,7 +30,7 @@ const upload=multer({
     },
 })
 
-router.get('/videos_list',checkAuth,(req,res)=>{
+router.get('/videos_list',(req,res)=>{
   try{
     console.log('came here');
     Video.find({},function(err,videos){
