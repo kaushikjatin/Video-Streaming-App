@@ -31,26 +31,30 @@ const upload=multer({
 })
 
 router.get('/videos_list',checkAuth,(req,res)=>{
-  Video.find({},function(err,videos){
-    if(err)
-    {
-        res.status(500).json({message:'Internal Server Error'});
-    }
-    else
-    {
-      var response=videos.map(function(video_obj){
-          const new_obj={
-            title:video_obj.title,
-            video_path:video_obj.video_path,
-            author_name:video_obj.author_name,
-            thumbnail_path:video_obj.thumbnail_path
-          }
-          return new_obj;
-      })
-      console.log(response);
-      res.status(200).send({videos:response});
-    }
-  })
+  try{
+    Video.find({},function(err,videos){
+      if(err)
+      {
+          res.status(500).json({message:'Internal Server Error'});
+      }
+      else
+      {
+        var response=videos.map(function(video_obj){
+            const new_obj={
+              title:video_obj.title,
+              video_path:video_obj.video_path,
+              author_name:video_obj.author_name,
+              thumbnail_path:video_obj.thumbnail_path
+            }
+            return new_obj;
+        })
+        console.log(response);
+        res.status(200).send({videos:response});
+      }
+    })
+  }catch(error){
+    res.status(404).send({error:error});
+  }
 })
 
 
