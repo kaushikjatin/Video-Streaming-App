@@ -91,8 +91,10 @@ router.post('/upload_video',checkAuth,(req,res)=>{
           fileName=fieldname+'-' + time+'.mp4';
           // Create a write stream of the new file
           const fstream = fs.createWriteStream(path.join(storagePath, fileName));
+          console.log("Created a write stream on server");
           // Pipe it trough
           file.pipe(fstream);
+          console.log("Piped that stream into the stream of server");
    
           // On finish of the upload
           fstream.on('close', () => {
