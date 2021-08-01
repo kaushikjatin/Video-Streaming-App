@@ -32,9 +32,11 @@ const upload=multer({
 
 router.get('/videos_list',checkAuth,(req,res)=>{
   try{
+    console.log('came here');
     Video.find({},function(err,videos){
       if(err)
       {
+          console.log('Got ths err',err);
           res.status(500).json({message:'Internal Server Error'});
       }
       else
@@ -48,11 +50,12 @@ router.get('/videos_list',checkAuth,(req,res)=>{
             }
             return new_obj;
         })
-        console.log(response);
+        console.log("This is sent response",response);
         res.status(200).send({videos:response});
       }
     })
   }catch(error){
+    console.log('THis is the error',error);
     res.status(404).send({error:error});
   }
 })
@@ -91,19 +94,19 @@ router.post('/upload_video',checkAuth,(req,res)=>{
     try{
       req.pipe(req.busboy);
         req.busboy.on('file', (fieldname, file, filename) => {
-          console.log(`Upload of '${filename}' started`);
+          // console.log(`Upload of '${filename}' started`);
           fileName=fieldname+'-' + time+'.mp4';
           // Create a write stream of the new file
           const fstream = fs.createWriteStream(path.join(storagePath, fileName));
-          console.log("Created a write stream on server");
+          // console.log("Created a write stream on server");
           // Pipe it trough
           file.pipe(fstream);
-          console.log("Piped that stream into the stream of server");
+          // console.log("Piped that stream into the stream of server");
    
           // On finish of the upload
           fstream.on('finish', () => {
                 fstream.close(() => {
-                  console.log(`Upload of '${fileName}' finished`);
+                  // console.log(`Upload of '${fileName}' finished`);
                  });
                 
                 const video_path='./UPLOADS/VIDEOS/' +'userFile'+'-'+time+'.mp4';
