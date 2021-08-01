@@ -97,7 +97,8 @@ router.post('/upload_video',checkAuth,(req,res)=>{
           console.log("Piped that stream into the stream of server");
    
           // On finish of the upload
-          fstream.on('close', () => {
+          fstream.on('finish', () => {
+                fstream.close();
                 console.log(`Upload of '${fileName}' finished`);
                 const video_path='./UPLOADS/VIDEOS/' +'userFile'+'-'+time+'.mp4';
                 const destination='./UPLOADS/THUMBNAILS/'+'userFile'+'-'+time+'.png';
