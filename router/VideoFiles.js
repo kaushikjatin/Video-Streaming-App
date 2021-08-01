@@ -98,8 +98,10 @@ router.post('/upload_video',checkAuth,(req,res)=>{
    
           // On finish of the upload
           fstream.on('finish', () => {
-                fstream.close();
-                console.log(`Upload of '${fileName}' finished`);
+                fstream.close(() => {
+                  console.log(`Upload of '${fileName}' finished`);
+                 });
+                
                 const video_path='./UPLOADS/VIDEOS/' +'userFile'+'-'+time+'.mp4';
                 const destination='./UPLOADS/THUMBNAILS/'+'userFile'+'-'+time+'.png';
                 generateThumbnail(video_path,destination);
@@ -127,6 +129,12 @@ router.post('/upload_video',checkAuth,(req,res)=>{
                   }
                 })
           });
+
+          fstream.on('error',function(err) {
+            fs.unlink(path.join(storagePath, fileName));
+            console.log(err);
+            res.status(500).json({message:'Streaming finished but error in the file....'})
+           })
       });
     }catch(error){
       console.log(err);
