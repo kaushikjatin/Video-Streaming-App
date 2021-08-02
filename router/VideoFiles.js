@@ -69,7 +69,7 @@ router.get('/:file_name',(req,res)=>{
         console.log("came here");
         res.status(400).send("Requires Range header");
       }
-      const videoPath='/Users/jatinkaushik/Web Projects/MERN STACK/Video-Streaming-App/server/UPLOADS/VIDEOS/'+req.params.file_name;
+      const videoPath= path.join(__dirname,'../UPLOADS/VIDEOS',req.params.file_name);
       const videoSize = fs.statSync(videoPath).size;
       const CHUNK_SIZE = 10 ** 6; // 1MB
       const start = Number(range.replace(/\D/g, ""));

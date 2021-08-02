@@ -34,7 +34,6 @@ app.use(busboy({
 }));
 
 
-app.use('/api/videos',express.static(path.join(__dirname, 'UPLOADS/VIDEOS')));
 app.use('/api/thumbnails',express.static(path.join(__dirname,'UPLOADS/THUMBNAILS')))
 
 
