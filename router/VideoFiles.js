@@ -41,7 +41,8 @@ router.get('/videos_list',(req,res)=>{
       }
       else
       {
-        var response=videos.map(function(video_obj){
+            console.log("These are the videos",videos);
+        var videos_list=videos.map(function(video_obj){
             const new_obj={
               title:video_obj.title,
               video_path:video_obj.video_path,
@@ -50,8 +51,8 @@ router.get('/videos_list',(req,res)=>{
             }
             return new_obj;
         })
-        console.log("This is sent response",response);
-        res.status(200).send({videos:response});
+        console.log("This is sent response",videos_list);
+        res.status(200).send({videos:videos_list});
       }
     })
   }catch(error){
