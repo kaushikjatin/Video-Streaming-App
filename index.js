@@ -34,6 +34,14 @@ app.use(busboy({
 }));
 
 
+app.use('/api/videos',express.static(path.join(__dirname, 'UPLOADS/VIDEOS')));
+app.use('/api/thumbnails',express.static(path.join(__dirname,'UPLOADS/THUMBNAILS')))
+
+
+app.use('/user/auth',require('./router/SIgnIn_SignUp'));
+app.use('/user/videos',require('./router/VideoFiles'));
+
+
 if(process.env.NODE_ENV=='production')
 {
     app.use(express.static(path.join(__dirname,'client/build')));
@@ -42,13 +50,6 @@ if(process.env.NODE_ENV=='production')
         res.sendFile(path.join(__dirname,'client/build/index.html'));
     })
 }
-
-app.use('/api/videos',express.static(path.join(__dirname, 'UPLOADS/VIDEOS')));
-app.use('/api/thumbnails',express.static(path.join(__dirname,'UPLOADS/THUMBNAILS')))
-
-
-app.use('/user/auth',require('./router/SIgnIn_SignUp'));
-app.use('/user/videos',require('./router/VideoFiles'));
 
 
 // if(process.env.NODE_ENV!='production') require('dotenv').config() 	// this line sets the environment variables
