@@ -13,8 +13,14 @@ function* fetchVideosHandler({payload}){
             url: '/user/videos/videos_list',
             headers:headers
         })
-        console.log(response);
-        yield put(fetchVideosSuccess(response.data.videos))
+        console.log("This is the response ->",response);
+        if(response.data.videos==null)
+        {
+            console.log("this is the data error ->",response.data.error);
+            yield put(fetchVideosFailure(response.data.error))
+        }else{
+            yield put(fetchVideosSuccess(response.data.videos))
+        }
     }catch(error){
         console.log(error);
         yield put(fetchVideosFailure(error));
