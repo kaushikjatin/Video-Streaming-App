@@ -2,7 +2,9 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav'
 import { connect } from 'react-redux';
 import {signOut} from '../../redux/user/user.actions';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import Container from 'react-bootstrap/Container'
+import './Navbar.styles.scss'
 
 class Navbar extends React.Component{
 
@@ -13,7 +15,7 @@ class Navbar extends React.Component{
             currentUser=null;
         }
         return(
-            <div className='container'>
+            <Container>
                 <Nav fill variant="tabs">
                 <Nav.Item>
                     <Nav.Link eventKey="link-0" as={Link} to="/">HOME</Nav.Link>
@@ -28,7 +30,9 @@ class Navbar extends React.Component{
                     {
                         currentUser?
                         (<Nav.Item>
-                            <Nav.Link eventKey="disabled" disabled>{currentUser}</Nav.Link>
+                            <Nav.Link  eventKey="disabled" disabled>
+                                <span className='currentUser'>{currentUser}</span>
+                                </Nav.Link>
                         </Nav.Item>):
                         (<span></span>)
                     }
@@ -57,7 +61,7 @@ class Navbar extends React.Component{
                             )
                     }
                 </Nav>
-            </div>
+            </Container>
         )
     }
 }

@@ -18,7 +18,11 @@ router.post('/signup',(req,res)=>{
                     const user=new User(user_details)
                     user.save()
                     .then(new_user=>{
-                        res.status(201).json({message:'User Created Successfully'})
+                        const jwt_token=jwt.sign({email:email,firstName:firstName},process.env.SECRET_KEY_JWT, {expiresIn: '1h'});
+                        res.status(201).json({
+                            token:jwt_token,
+                            firstName:firstName
+                        });
                     })
                     .catch(err=>{
                         res.status(422).json({message:err})

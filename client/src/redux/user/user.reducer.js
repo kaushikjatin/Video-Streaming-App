@@ -23,7 +23,9 @@ const userReducer =(state=initial_state,action)=>{
         case UserActionTypes.SignUpSuccess:
             return{
                 ...state,
-                currentUser:action.payload
+                currentUser:action.payload.firstName,
+                token:action.payload.token,
+                time:new Date()
             }
         case UserActionTypes.SignUpFailure:
             return{

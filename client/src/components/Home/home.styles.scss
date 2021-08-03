@@ -4,3 +4,18 @@
     box-sizing: border-box;
     text-align: center;
 }
+
+.homepage_container{
+    width: 80%;
+    padding-top: 10vh;
+    margin: 0 auto;
+
+    .homepage_listgroup{
+        margin: 40px 40px;
+
+        .list_heading{
+            text-align: center;
+            font-size: 30px;
+        }
+    }
+}

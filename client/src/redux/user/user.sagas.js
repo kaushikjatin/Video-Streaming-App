@@ -1,6 +1,6 @@
 import {takeEvery,all,call,put} from 'redux-saga/effects';
 import { UserActionTypes } from './user.actions.types';
-import {signInSuccess,signInFailure} from './user.actions'
+import {signInSuccess,signInFailure,signUpSuccess} from './user.actions'
 import axios from 'axios';
 
 
@@ -26,6 +26,8 @@ function* emailSignUpHandler({payload}){
             url: '/user/auth/signup',
             data: payload
         })
+        yield put(signUpSuccess(response.data));
+        payload.history.push('/');
     }catch(error){
         console.log(error);
     }

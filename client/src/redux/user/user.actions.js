@@ -15,9 +15,9 @@ export const signInSuccess = (response)=>({
     payload:response
 })
 
-export const emailSignUpStart=({email,password,firstName,lastName})=>({
+export const emailSignUpStart=({email,password,firstName,lastName,history})=>({
     type:UserActionTypes.EmailSignUpStart,
-    payload:{email,password,firstName,lastName}
+    payload:{email,password,firstName,lastName,history}
 })
 
 export const signUpFailure = (error)=>({
