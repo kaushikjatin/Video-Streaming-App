@@ -5,18 +5,12 @@ import axios from 'axios'
 
 function* fetchVideosHandler({payload}){
     try{
-        console.log("came here");
-        console.log(payload);
-        const headers={'authorization':payload}
         const response=yield axios({
             method: 'get',
             url: '/user/videos/videos_list',
-            headers:headers
         })
-        console.log("This is the response ->",response);
         if(response.data.videos==null)
         {
-            console.log("this is the data error ->",response.data.error);
             yield put(fetchVideosFailure(response.data.error))
         }else{
             yield put(fetchVideosSuccess(response.data.videos))

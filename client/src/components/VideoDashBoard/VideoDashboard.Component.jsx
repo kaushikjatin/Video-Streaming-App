@@ -9,34 +9,39 @@ import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 
 
-const VideoDashboard = ({Video_objects,fetchVideosStart,token,token_issue_time,history})=>{
+const VideoDashboard = ({Video_objects,fetchVideosStart})=>{
     useEffect(()=>{
-        const hours_diff=Math.abs(new Date().getTime() - new Date(token_issue_time).getTime())/(1000 * 60 * 60);
-        if(hours_diff>1){
-            history.push('/signin');
-        }
-        else{
-            console.log(token);
-            fetchVideosStart(token,token_issue_time);
-        }
-    },[token_issue_time,token,fetchVideosStart,history])
+            fetchVideosStart();
+    },[fetchVideosStart])
 
     return(
         <Container className='video_container'>
             <Row className="justify-content-md-center">
                 {
-                    Video_objects.map((video)=>{ 
-                        return <Col className='video_card' md="3" xs="12" sm="4" key={video.title}>
-                                    <Card>
-                                    <Link to={'/video/'+video.video_path}>
-                                    <Card.Img variant="top" src={video.thumbnail_path} />
-                                    <Card.Body>
-                                        <Card.Title>{video.title}</Card.Title>
-                                    </Card.Body>
-                                    </Link>
-                                    </Card>
-                               </Col> 
-                    })
+                    (Video_objects.length===0)?(
+                        <div className='no_video_statement'>
+                                No Videos To Show!
+                        </div>
+                    ):(
+                        Video_objects.map((video)=>{ 
+                            return <Col className='video_card_col' md="3" xs="12" sm="4" key={video.title}>
+                                        <Card className='card'>
+                                            <Link  className='card_link' to={'/video/'+video.video_path+'/'+video.video_name}>
+                                            <Card.Img variant="top" src={video.thumbnail_path} alt="Card image"/>
+                                            <Card.Body>
+                                                {
+                                                    (video.video_name.length>15)?(
+                                                        <Card.Text className='video_name'>{video.video_name.substr(0,15)+'.....'}</Card.Text>
+                                                    ):(
+                                                        <Card.Text className='video_name'>{video.video_name}</Card.Text>
+                                                    )
+                                                }
+                                            </Card.Body>
+                                            </Link>
+                                        </Card>
+                                   </Col> 
+                        })
+                    )
                 }
             </Row>
         </Container>
@@ -44,12 +49,10 @@ const VideoDashboard = ({Video_objects,fetchVideosStart,token,token_issue_time,h
 }
 
 const mapDispatchToProps=(dispatch)=>({
-    fetchVideosStart:(token,token_issue_time)=>dispatch(fetchVideosStart(token))
+    fetchVideosStart:()=>dispatch(fetchVideosStart())
 })
 
 const mapStateToProps=(state)=>({
-    token:'bearer '+state.user.token,
-    token_issue_time:state.user.time,
     Video_objects:state.video.videos
 })
 

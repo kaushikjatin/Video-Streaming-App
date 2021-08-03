@@ -1,9 +1,21 @@
 .signin_form{
+
+    .signin_message{
+        text-align: center;
+        font-size: 40px;
+        .additional_message{
+            text-align: center;
+            font-size: 15px;
+        }
+
+        margin-bottom: 50px;
+    }
+
     margin: auto auto;
     width: 40%;
     margin-top: 10%;
 
-    @media only screen and (max-width:660px){
+    @media only screen and (max-width:700px){
         width: 80%;
         margin-top: 20%;
     }

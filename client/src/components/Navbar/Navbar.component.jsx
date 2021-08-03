@@ -7,12 +7,16 @@ import {Link} from 'react-router-dom'
 class Navbar extends React.Component{
 
     render(){
-        var {currentUser,signOut}=this.props;
+        var {currentUser,signOut,token_issue_time}=this.props;
+        const hours_diff=Math.abs(new Date().getTime() - new Date(token_issue_time).getTime())/(1000 * 60 * 60);
+        if(hours_diff>1){
+            currentUser=null;
+        }
         return(
-            <div className='navbar'>
+            <div className='container'>
                 <Nav fill variant="tabs">
                 <Nav.Item>
-                    <Nav.Link as={Link} to="/">HOME</Nav.Link>
+                    <Nav.Link eventKey="link-0" as={Link} to="/">HOME</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link eventKey="link-1" as={Link} to="/upload_video">Upload Video</Nav.Link>
@@ -20,9 +24,6 @@ class Navbar extends React.Component{
                 <Nav.Item>
                     <Nav.Link eventKey="link-2" as={Link} to="/videos">Videos</Nav.Link>
                 </Nav.Item>
-                </Nav>
-
-                <Nav className="justify-content-end" activeKey="/home">
 
                     {
                         currentUser?
@@ -36,7 +37,7 @@ class Navbar extends React.Component{
                             (
                                 <Nav.Item>
                                    <span onClick={signOut}>
-                                       <Nav.Link eventKey="link-1" >LogOut</Nav.Link>
+                                       <Nav.Link eventKey="link-3" >LogOut</Nav.Link>
                                     </span>
                                 </Nav.Item>
                             ):(
@@ -51,7 +52,7 @@ class Navbar extends React.Component{
                                 <div></div>
                             ):(
                                     <Nav.Item>
-                                             <Nav.Link eventKey="link-3" as={Link} to="/signup">Register</Nav.Link>
+                                             <Nav.Link eventKey="link-4" as={Link} to="/signup">Register</Nav.Link>
                                     </Nav.Item>
                             )
                     }
@@ -63,7 +64,8 @@ class Navbar extends React.Component{
 
 const mapStateToProps = (state)=>{
     return{
-        currentUser:state.user.currentUser
+        currentUser:state.user.currentUser,
+        token_issue_time:state.user.time
     }
 }
 

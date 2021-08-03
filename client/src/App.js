@@ -18,7 +18,7 @@ function App() {
           <Route exact path='/signup' component={SignUp}></Route>
           <Route exact path='/upload_video' component={UploadVideo}></Route>
           <Route exact path='/videos' component={VideoDashBoard}></Route>
-          <Route exact path='/video/:title' component={VideoPlayer}></Route>
+          <Route exact path='/video/:title/:name' component={VideoPlayer}></Route>
       </Switch>
      </div>
   );

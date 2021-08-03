@@ -43,7 +43,6 @@ router.post('/signin',(req,res)=>{
                 if(result==true)
                 {
                     const jwt_token=jwt.sign({email:email,firstName:user[0].firstName},process.env.SECRET_KEY_JWT, {expiresIn: '1h'});
-                    console.log('TOKEN has been sent');
                     res.status(200).json({
                         token:jwt_token,
                         firstName:user[0].firstName
@@ -54,6 +53,7 @@ router.post('/signin',(req,res)=>{
         }
     })
     .catch(err=>{
+        console.log("This error",err);
         res.status(500).json({message:'Internal Server Error'})
     })
 })

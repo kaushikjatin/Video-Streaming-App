@@ -35,21 +35,18 @@ function* FileUploadHandler({payload}){
         })
         var formData=new FormData();
         formData.append('userFile',payload.selectedFile);
+        formData.append('video_name',payload.videoName);
         const headers={'authorization':payload.token}
         makeAxiosRequest(formData,headers,onUploadProgress);
         while (true) {
             const data = yield take(channel);
-            console.log(data);
             yield put(SetFileUploadBar(data));
         }
-        // yield put(FileUploadSuccess());
-        // uploadPromise.then(response=>console.log(response)).catch(error=>console.log("ERROR____>",error));
     }catch(error){
         console.log(error);
     }finally {
         yield put(SetFileUploadBar(100));
         yield put(FileUploadSuccess());
-        // console.log(uploadPromise.then(response=>{console.log(response)}));
       }
 }
 

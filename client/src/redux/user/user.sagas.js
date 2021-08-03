@@ -26,7 +26,6 @@ function* emailSignUpHandler({payload}){
             url: '/user/auth/signup',
             data: payload
         })
-        console.log(response)
     }catch(error){
         console.log(error);
     }

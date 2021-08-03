@@ -1,10 +1,13 @@
+>>>>>>>>>>>>> ->  Completed 
+
+
 1) Make token expiration   >>>>>>>>>>>>>>>>>
-2) Error codes and messaages sent from server, but not properly handled in frontend.
+2) Remove extra console.log() statements. >>>>>>>>>>>>>>>>>>>>>>
 3) Progress bar in the video-upload >>>>>>>>>>>>>>>
 4) Mongoose data validation is also to be added.
 5) Limiting the number of videos to be sent when get request for video_list
 6) Add a Navabr   >>>>>>>>>>>>>>>>>>
-7) Improve the field names inside forms  
+7) Improve the field names inside forms like file name etc.>>>>>>>>>>>>>>>
 8) Do Styling  >>>>>>>>>>>>>>>>>>>>>>
 9) Make responsive  >>>>>>>>>>>>>>>>>>>>
 10) Include the thumbnail inside the dashboard   >>>>>>>>>>>>>>>>>>>>>>>>
@@ -13,5 +16,13 @@
 14) Optimize app while streaming any larger file    >>>>>>>>>>>>>>>>>>>>>
 15) Enhance user experience by redirecting to sone page or an alert after signin and after uploading the video too. >>>>>>>>>>>>>>>>>>>
 16) Ensure that when user opens tab after 1 hour then it still hows it to be logged in because the state have value of currentUser in it,,,but in actual
-    the token time would have expired....(It means to show that Session has expired!)
+    the token time would have expired....(It means to show that Session has expired!)>>>>>>>>>>>>>>>>>>>>>>
 17) Make the Welcome Page.  >>>>>>>>>>>>>>>>>>>>>>>>>
+18) Deployed on heroku and completely working. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+19) Change the styling of Home page.
+20) Make it completely ready for including it into resume.
+21) Navbar is not mobile responsive ,, make it mobile responsive and also do style the pages where videos are watched.
+22) Do include the checkauth while uploading a video and remove the check auth while watching the videos,,,also do include the statement that
+23) Limit the upload size of file upto 5Mb and do include message of the limit of size of file.
+24) Handle errors and do show peroper error messages on pages.
+25) Make the user to redirect to home page after the signup/register

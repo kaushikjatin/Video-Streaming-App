@@ -13,7 +13,6 @@ const SignIn = (props)=>{
 
     const handleSubmit= async event=>{
         event.preventDefault();
-        console.log("We will make a store,redux-saga, and then do the authentication process")
         EmailSignInStart(email,password,props.history);
         setCredentials({email:'',password:''})
     }
@@ -25,6 +24,13 @@ const SignIn = (props)=>{
 
     return(
         <div className='signin_form'>
+
+                <div className='signin_message'>
+                    LOGIN 
+                    <div className='additional_message'>
+                        Stream smoothly long videos with ease!
+                    </div>
+                </div>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>

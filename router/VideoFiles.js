@@ -32,26 +32,23 @@ const upload=multer({
 
 router.get('/videos_list',(req,res)=>{
   try{
-    console.log('came here');
     Video.find({},function(err,videos){
       if(err)
       {
-          console.log('Got ths err',err);
           res.status(500).json({message:'Internal Server Error'});
       }
       else
       {
-            console.log("These are the videos",videos);
         var videos_list=videos.map(function(video_obj){
             const new_obj={
               title:video_obj.title,
               video_path:video_obj.video_path,
               author_name:video_obj.author_name,
-              thumbnail_path:video_obj.thumbnail_path
+              thumbnail_path:video_obj.thumbnail_path,
+              video_name:video_obj.video_name
             }
             return new_obj;
         })
-        console.log("This is sent response",videos_list);
         res.status(200).send({videos:videos_list});
       }
     })
@@ -63,10 +60,8 @@ router.get('/videos_list',(req,res)=>{
 
 
 router.get('/:file_name',(req,res)=>{
-      console.log("GOT A REQUEST>>>>>")
       const range = req.headers.range;
       if (!range) {
-        console.log("came here");
         res.status(400).send("Requires Range header");
       }
       const videoPath= path.join(__dirname,'../UPLOADS/VIDEOS',req.params.file_name);
@@ -83,7 +78,6 @@ router.get('/:file_name',(req,res)=>{
       };
       res.writeHead(206, headers);
       const videoStream = fs.createReadStream(videoPath, { start, end });
-      console.log("send a good response");
       videoStream.pipe(res);
 })
 
@@ -92,28 +86,32 @@ router.get('/:file_name',(req,res)=>{
 
 router.post('/upload_video',checkAuth,(req,res)=>{
 
+    var video_obj={}
     try{
       req.pipe(req.busboy);
+
+        req.busboy.on('field',(fieldname,value)=>{
+          video_obj={
+            'video_name':value
+          }
+        })
+
         req.busboy.on('file', (fieldname, file, filename) => {
-          // console.log(`Upload of '${filename}' started`);
           fileName=fieldname+'-' + time+'.mp4';
           // Create a write stream of the new file
           const fstream = fs.createWriteStream(path.join(storagePath, fileName));
-          // console.log("Created a write stream on server");
           // Pipe it trough
           file.pipe(fstream);
-          // console.log("Piped that stream into the stream of server");
-   
           // On finish of the upload
           fstream.on('finish', () => {
                 fstream.close(() => {
-                  // console.log(`Upload of '${fileName}' finished`);
                  });
                 
                 const video_path='./UPLOADS/VIDEOS/' +'userFile'+'-'+time+'.mp4';
                 const destination='./UPLOADS/THUMBNAILS/'+'userFile'+'-'+time+'.png';
                 generateThumbnail(video_path,destination);
-                var video_obj={
+                video_obj={
+                  ...video_obj,
                   title:'Temp_title'+time,
                   video_path:'userFile'+'-'+time+'.mp4',
                   thumbnail_path:'/api/thumbnails/'+'userFile'+'-'+time+'.png',
@@ -138,6 +136,8 @@ router.post('/upload_video',checkAuth,(req,res)=>{
                 })
           });
 
+
+
           fstream.on('error',function(err) {
             fs.unlink(path.join(storagePath, fileName));
             console.log(err);
@@ -145,7 +145,7 @@ router.post('/upload_video',checkAuth,(req,res)=>{
            })
       });
     }catch(error){
-      console.log(err);
+      console.log(error);
       res.status(500).json({message:'An Internal Error occured while uploading file'})
     }
         time=Date.now();
