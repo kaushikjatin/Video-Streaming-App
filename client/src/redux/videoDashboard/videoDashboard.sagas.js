@@ -1,6 +1,7 @@
 import {put, call, all, takeEvery} from 'redux-saga/effects';
 import {VideoDashboardActionTypes} from './videoDashboard.types';
-import {fetchVideosSuccess,fetchVideosFailure} from './videoDashboard.actions';
+import {fetchVideosSuccess} from './videoDashboard.actions';
+import {setVideoDashboardPageAlert} from '../Alerts/Alert.Actions';
 import axios from 'axios'
 
 function* fetchVideosHandler({payload}){
@@ -11,13 +12,13 @@ function* fetchVideosHandler({payload}){
         })
         if(response.data.videos==null)
         {
-            yield put(fetchVideosFailure(response.data.error))
+            yield put(setVideoDashboardPageAlert({state:true,message:'Null returned from video server'}));
         }else{
             yield put(fetchVideosSuccess(response.data.videos))
         }
     }catch(error){
         console.log(error);
-        yield put(fetchVideosFailure(error));
+        yield put(setVideoDashboardPageAlert({state:true,message:error.response.data.message}));
     }
 }
 

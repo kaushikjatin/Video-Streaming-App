@@ -26,7 +26,7 @@ var storage=multer.diskStorage({
 const upload=multer({
     storage:storage,
     limits:{
-        fileSize:50*1024*1024*1024
+        fileSize:20 * 1000 * 1000   // limit of size if 20 Megabyte.
     },
 })
 
@@ -35,7 +35,7 @@ router.get('/videos_list',(req,res)=>{
     Video.find({},function(err,videos){
       if(err)
       {
-          res.status(500).json({message:'Internal Server Error'});
+          res.status(500).json({message:'Internal Database Error'});
       }
       else
       {
@@ -54,31 +54,40 @@ router.get('/videos_list',(req,res)=>{
     })
   }catch(error){
     console.log('THis is the error',error);
-    res.status(404).send({error:error});
+    res.status(500).send({message:'Internal DataBase Error'});
   }
 })
 
 
 router.get('/:file_name',(req,res)=>{
-      const range = req.headers.range;
+  try{
+    const range = req.headers.range;
       if (!range) {
         res.status(400).send("Requires Range header");
+      }else{
+        const videoPath= path.join(__dirname,'../UPLOADS/VIDEOS',req.params.file_name);
+        const videoSize = fs.statSync(videoPath).size;
+        const CHUNK_SIZE = 10 ** 6; // 1MB
+        const start = Number(range.replace(/\D/g, ""));
+        const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
+        const contentLength = end - start + 1;
+        const headers = {
+          "Content-Range": `bytes ${start}-${end}/${videoSize}`,
+          "Accept-Ranges": "bytes",
+          "Content-Length": contentLength,
+          "Content-Type": "video/mp4",
+        };
+        res.writeHead(206, headers);
+        const videoStream = fs.createReadStream(videoPath, { start, end });
+        videoStream.pipe(res);
       }
-      const videoPath= path.join(__dirname,'../UPLOADS/VIDEOS',req.params.file_name);
-      const videoSize = fs.statSync(videoPath).size;
-      const CHUNK_SIZE = 10 ** 6; // 1MB
-      const start = Number(range.replace(/\D/g, ""));
-      const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
-      const contentLength = end - start + 1;
-      const headers = {
-        "Content-Range": `bytes ${start}-${end}/${videoSize}`,
-        "Accept-Ranges": "bytes",
-        "Content-Length": contentLength,
-        "Content-Type": "video/mp4",
-      };
-      res.writeHead(206, headers);
-      const videoStream = fs.createReadStream(videoPath, { start, end });
-      videoStream.pipe(res);
+  }catch(error){
+    if (error.code === 'ENOENT') {
+      res.status(404).send({message:'The file you are asking for have been taken down by the user.'})
+    } else {
+      res.status(500).send({message:'Internal Server Error'});
+    }
+  }
 })
 
 

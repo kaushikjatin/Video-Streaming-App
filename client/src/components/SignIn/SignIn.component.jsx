@@ -1,19 +1,21 @@
 import React,{useState} from 'react';
 import { connect } from 'react-redux';
-import {emailSignInStart} from '../../redux/user/user.actions'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import './SignIn.styles.scss'
+import {emailSignInStart} from '../../redux/user/user.actions';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import './SignIn.styles.scss';
+import AlertMessage from '../Alert/Alert.component';
+import {setSignInPageAlert} from '../../redux/Alerts/Alert.Actions'
 
 const SignIn = (props)=>{
-    const [credentials,setCredentials]=useState({email:'',password:''})
-    const {EmailSignInStart}=props;
+    const [credentials,setCredentials]=useState({email:'',password:''});
+    const {EmailSignInStart,alertInfo}=props;
     const {email,password}=credentials;
 
 
     const handleSubmit= async event=>{
         event.preventDefault();
-        EmailSignInStart(email,password,props.history);
+        EmailSignInStart(email,password,props.history,setCredentials);
         setCredentials({email:'',password:''})
     }
 
@@ -23,8 +25,9 @@ const SignIn = (props)=>{
     }
 
     return(
-        <div className='signin_form'>
-
+        <div>
+            <AlertMessage setAlertInfo={setSignInPageAlert} alertInfo={alertInfo}></AlertMessage>
+            <div className='signin_form'>
                 <div className='signin_message'>
                     LOGIN 
                     <div className='additional_message'>
@@ -50,11 +53,16 @@ const SignIn = (props)=>{
                 </Form>
 
         </div>
+        </div>
     )
 }
+
+const mapStateToProps=(state)=>({
+    alertInfo:state.alert.signInPageInfo
+})
 
 const mapDispatchToProps = (dispatch)=>({
     EmailSignInStart : (email,password,history)=>dispatch(emailSignInStart({email,password,history}))
 })
 
-export default connect(null,mapDispatchToProps)(SignIn)
+export default connect(mapStateToProps,mapDispatchToProps)(SignIn)

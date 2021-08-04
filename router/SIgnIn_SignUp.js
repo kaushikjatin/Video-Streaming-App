@@ -25,7 +25,7 @@ router.post('/signup',(req,res)=>{
                         });
                     })
                     .catch(err=>{
-                        res.status(422).json({message:err})
+                        res.status(422).json({message:'Internal Database Error'})
                     })   
                 }
             })

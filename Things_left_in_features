@@ -1,11 +1,10 @@
 >>>>>>>>>>>>> ->  Completed 
-
-
+kelfnd
 1) Make token expiration   >>>>>>>>>>>>>>>>>
 2) Remove extra console.log() statements. >>>>>>>>>>>>>>>>>>>>>>
 3) Progress bar in the video-upload >>>>>>>>>>>>>>>
-4) Mongoose data validation is also to be added.
-5) Limiting the number of videos to be sent when get request for video_list
+4) Mongoose data validation is also to be added.(In beta version)
+5) Limiting the number of videos to be sent when get request for video_list(In beta version)
 6) Add a Navabr   >>>>>>>>>>>>>>>>>>
 7) Improve the field names inside forms like file name etc.>>>>>>>>>>>>>>>
 8) Do Styling  >>>>>>>>>>>>>>>>>>>>>>
@@ -23,8 +22,8 @@
 20) Make it completely ready for including it into resume.
 21) Navbar is not mobile responsive ,, make it mobile responsive and also do style the pages where videos are watched.>>>>>>>>>>>
 22) Do include the checkauth while uploading a video and remove the check auth while watching the videos,,,also do include the statement that>>>>>>>>>>>>>>>>>
-23) Limit the upload size of file upto 5Mb and do include message of the limit of size of file.
-24) Handle errors and do show proper error messages on pages.
+23) Limit the upload size of file upto 5Mb and do include message of the limit of size of file.>>>>>>>>>>>>>>>>>>
+24) Handle errors and do show proper error messages on pages.>>>>>>>>>>>>>>>>>>>>>>>>.(upload file page and watch video file left!)
 25) Make the user to redirect to home page after the signup/register>>>>>>>>>>>>>>>>>>>>>>
 26) Make the UserName in the Nav a dropdow and provide the options of viewing his uploaded videos on  page,,and also provide the 
     option of deleting the account and also provide the option where a user deletes a video and another user have the link and try 

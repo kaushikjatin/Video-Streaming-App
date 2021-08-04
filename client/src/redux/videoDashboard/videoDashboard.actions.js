@@ -5,11 +5,6 @@ export const fetchVideosStart=(token)=>({
     payload:token
 })
 
-export const fetchVideosFailure = (error)=>({
-    type:VideoDashboardActionTypes.fetchVideosFailure,
-    payload:error
-})
-
 export const fetchVideosSuccess = (response)=>({
     type:VideoDashboardActionTypes.fetchVideosSuccess,
     payload:response

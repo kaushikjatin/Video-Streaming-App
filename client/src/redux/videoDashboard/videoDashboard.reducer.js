@@ -10,11 +10,6 @@ const VideoDashboardReducer=(state=inital_state,action)=>{
                 ...state,
                 videos:action.payload
             }
-        case VideoDashboardActionTypes.fetchVideosFailure:
-            return{
-                ...state,
-                error:action.payload
-            }
         default:
             return{
                 ...state

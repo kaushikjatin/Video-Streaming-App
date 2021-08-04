@@ -1,6 +1,7 @@
 import {takeEvery,all,call,put} from 'redux-saga/effects';
 import { UserActionTypes } from './user.actions.types';
-import {signInSuccess,signInFailure,signUpSuccess} from './user.actions'
+import {signInSuccess,signUpSuccess} from './user.actions';
+import { setSignInPageAlert ,setSignUpPageAlert} from '../Alerts/Alert.Actions';
 import axios from 'axios';
 
 
@@ -12,10 +13,10 @@ function* emailSignInHandler({payload}){
             data: {email:payload.email,password:payload.password}
         })
         yield put(signInSuccess(response.data));
+        yield put(setSignInPageAlert({state:true,message:'Signed In Successfully!'}))
         payload.history.push('/');
     }catch(error){
-        console.log(error);
-        yield put(signInFailure());
+        yield put(setSignInPageAlert({state:true,message:error.response.data.message}));
     }
 }
 
@@ -29,7 +30,7 @@ function* emailSignUpHandler({payload}){
         yield put(signUpSuccess(response.data));
         payload.history.push('/');
     }catch(error){
-        console.log(error);
+        yield put(setSignUpPageAlert({state:true,message:error.response.data.message}));
     }
 }
 
