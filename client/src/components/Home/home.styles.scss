@@ -10,8 +10,18 @@
     padding-top: 10vh;
     margin: 0 auto;
 
+    @media only screen and (max-width:700px){
+        width: 95%;
+    }
+
+
     .homepage_listgroup{
         margin: 40px 40px;
+
+        @media only screen and (max-width:700px){
+            margin: 40px 0px;
+        }
+    
 
         .list_heading{
             text-align: center;
