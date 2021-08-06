@@ -28,8 +28,8 @@ kelfnd
 26) Make the UserName in the Nav a dropdow and provide the options of viewing his uploaded videos on  page,,and also provide the 
     option of deleting the account and also provide the option where a user deletes a video and another user have the link and try 
     to watch the video,,,then it must be shown that the video have been removed.(In beta Version.)
-
+27) Use Google Bucket for storing static video files instead of using Heroku File System(where video gets deleted after every dyno start).
 
 
 Update on Mobile screen
-1) Optimisation we have done have bad styling on homepage,,,,make it littbe lit wider.
+1) Optimisation we have done , have bad styling on homepage,,,,make it little bit wider.

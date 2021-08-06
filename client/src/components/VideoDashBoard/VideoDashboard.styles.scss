@@ -11,8 +11,14 @@
         .card{
             .card_link{
                     text-decoration: none;
+                .image_styles{
+                    height: 170px;
+                    border-bottom: 2px solid black;
+                }
                 .video_name{
                     text-align: center;
+                    color: black;
+                    text-transform: capitalize;
                 }
             }
         }

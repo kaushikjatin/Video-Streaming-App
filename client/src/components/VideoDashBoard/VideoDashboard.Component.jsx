@@ -30,9 +30,9 @@ const VideoDashboard = ({Video_objects,alertInfo,fetchVideosStart})=>{
                         ):(
                             Video_objects.map((video)=>{ 
                                 return <Col className='video_card_col' md="3" xs="12" sm="4" key={video.title}>
-                                            <Card className='card'>
+                                            <Card className='card' style={{ width: '18rem' }}>
                                                 <Link  className='card_link' to={'/video/'+video.video_path+'/'+video.video_name}>
-                                                <Card.Img variant="top" src={video.thumbnail_path} alt="Card image"/>
+                                                <Card.Img className='image_styles' variant="top" src={video.thumbnail_path} alt="Video have been taken down as per the policy"/>
                                                 <Card.Body>
                                                     {
                                                         (video.video_name.length>15)?(

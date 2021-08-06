@@ -42,7 +42,10 @@ const UploadVideo = (props)=>{
         <div className='file_form'>
             {
                 uploaded===100?
-                (<div className='file_status_message'>FILE UPLOADED SUCCESSFULLY!</div>):
+                (<div>
+                <div className='file_status_message'>FILE UPLOADED SUCCESSFULLY!</div>
+                <div className='file_status_message2'>YOUR FILE WILL BE TAKEN DOWN AFTER A DAY ACCORDING TO THE POLICY!</div>
+                </div>):
                 (<span></span>)
             }
             <Form onSubmit={handleSubmit}>
