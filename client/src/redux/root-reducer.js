@@ -5,6 +5,7 @@ import FileReducer from './fileUploader/file.reducer'
 import AlertReducer from './Alerts/Alert.reducer'
 import {persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import UserVideoDashboardReducer from './userVideoDashboard/userVideoDashboard.reducer'
 
 
 const persistConfig={
@@ -19,7 +20,8 @@ const rootReducer= combineReducers({
     user:userReducer,
     video:VideoDashboardReducer,
     uploaded_file:FileReducer,
-    alert:AlertReducer
+    alert:AlertReducer,
+    userVideo:UserVideoDashboardReducer
 })
 
 const PersistReducer=persistReducer(persistConfig,rootReducer);

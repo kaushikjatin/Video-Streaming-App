@@ -28,11 +28,13 @@ const UploadVideo = (props)=>{
         if(name==='video_name'){
             setVideoName(event.target.value);
         }else{
-            SetFileUploadBar(0);
-            if(event.target.files[0].size>20 * 1000 * 1000) // this size is in bytes
-                alert("File size must be <20 Megabytes");
-            else{
-                setSelectedFile(event.target.files[0]);
+            if(event.target.files.length!==0){
+                SetFileUploadBar(0);
+                if(event.target.files[0].size>20 * 1000 * 1000) // this size is in bytes
+                    alert("File size must be <20 Megabytes");
+                else{
+                    setSelectedFile(event.target.files[0]);
+                }
             }
         }
     }

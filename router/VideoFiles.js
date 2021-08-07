@@ -30,6 +30,7 @@ const upload=multer({
     },
 })
 
+
 router.get('/videos_list',(req,res)=>{
   try{
     Video.find({},function(err,videos){
@@ -54,6 +55,64 @@ router.get('/videos_list',(req,res)=>{
     })
   }catch(error){
     console.log('THis is the error',error);
+    res.status(500).send({message:'Internal DataBase Error'});
+  }
+})
+
+router.post('/get_my_videos',checkAuth,(req,res)=>{
+  try{
+    const user_id=req.body.currentUser_id;
+    User.findById(user_id).populate('videos').exec(function(err,user){
+      if(err)
+      {
+          res.status(500).send({message:'Internal Database Error'});
+      }
+      else
+      {
+        res.status(200).send({videos:user.videos});
+      }
+    })
+  }catch(error){
+    console.log('THis is the error',error);
+    res.status(500).send({message:'Internal DataBase Error'});
+  }
+})
+
+router.delete("/:video_id",checkAuth,(req,res)=>{
+  try{
+      const file_name=req.body.title;
+      const videoPath= path.join(__dirname,'../UPLOADS/VIDEOS',file_name);
+      const thumbnailPath=path.join(__dirname,'../UPLOADS/THUMBNAILS',file_name).split(".")[0]+'.png';
+      const video_id=req.params.video_id;
+
+      if(fs.existsSync(videoPath)){
+          fs.unlink(videoPath,function(err){
+            if(err){console.log(err);
+              res.status(500).send({message:'Internal Server Error'})}
+            else{
+              fs.unlink(thumbnailPath,function(err){
+                if(err){res.status(500).send({message:'Internal Server Error'})}
+                else{
+                  Video.findByIdAndDelete(video_id,function(err){
+                    if(err)
+                    {res.status(500).send({message:'Internal Database Error'})}
+                    else
+                    {res.status(200).send({message:'Video Deleted Successfully'})};
+                  })
+                }
+              })
+            }
+          });
+      }else{
+        Video.findByIdAndDelete(video_id,function(err){
+          if(err)
+          {res.status(500).send({message:'Internal Database Error'})}
+          else
+          {res.status(200).send({message:'Video Deleted Successfully'})};
+        })
+      }
+  }catch(error){
+    console.log("This is error",error);
     res.status(500).send({message:'Internal DataBase Error'});
   }
 })

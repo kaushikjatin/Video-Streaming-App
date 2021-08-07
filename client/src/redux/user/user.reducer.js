@@ -3,7 +3,8 @@ import {UserActionTypes} from './user.actions.types'
 const initial_state={
     currentUser:null,
     token:null,
-    time:null
+    time:null,
+    currentUser_id:null
 }
 
 const userReducer =(state=initial_state,action)=>{
@@ -13,21 +14,24 @@ const userReducer =(state=initial_state,action)=>{
                 ...state,
                 currentUser:action.payload.firstName,
                 token:action.payload.token,
-                time:new Date()
+                time:new Date(),
+                currentUser_id:action.payload.user_id
             }
         case UserActionTypes.SignUpSuccess:
             return{
                 ...state,
                 currentUser:action.payload.firstName,
                 token:action.payload.token,
-                time:new Date()
+                time:new Date(),
+                currentUser_id:action.payload.user_id
             }
         case UserActionTypes.SignOut:
             return{
                 ...state,
                 currentUser:null,
                 token:null,
-                time:null
+                time:null,
+                currentUser_id:null,
             }
         default:
             return state;

@@ -21,7 +21,8 @@ router.post('/signup',(req,res)=>{
                         const jwt_token=jwt.sign({email:email,firstName:firstName},process.env.SECRET_KEY_JWT, {expiresIn: '1h'});
                         res.status(201).json({
                             token:jwt_token,
-                            firstName:firstName
+                            firstName:firstName,
+                            user_id:new_user._id
                         });
                     })
                     .catch(err=>{
@@ -49,7 +50,8 @@ router.post('/signin',(req,res)=>{
                     const jwt_token=jwt.sign({email:email,firstName:user[0].firstName},process.env.SECRET_KEY_JWT, {expiresIn: '1h'});
                     res.status(200).json({
                         token:jwt_token,
-                        firstName:user[0].firstName
+                        firstName:user[0].firstName,
+                        user_id:user[0]._id
                     });
                 }
                 else {res.status(401).send({message:'Wrong Username Or Password'})};

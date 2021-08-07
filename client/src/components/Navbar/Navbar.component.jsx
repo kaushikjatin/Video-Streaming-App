@@ -1,5 +1,6 @@
 import React from 'react';
 import Nav from 'react-bootstrap/Nav'
+import NavDropdown from 'react-bootstrap/NavDropdown'
 import { connect } from 'react-redux';
 import {signOut} from '../../redux/user/user.actions';
 import {Link} from 'react-router-dom';
@@ -29,11 +30,10 @@ class Navbar extends React.Component{
 
                     {
                         currentUser?
-                        (<Nav.Item>
-                            <Nav.Link  eventKey="disabled" disabled>
-                                <span className='currentUser'>{currentUser}</span>
-                                </Nav.Link>
-                        </Nav.Item>):
+                        (   <NavDropdown title={currentUser} id="nav-dropdown">
+                                <NavDropdown.Item eventKey="4.1" as={Link} to="/user/videos">Go To Your Videos</NavDropdown.Item>
+                      </NavDropdown>
+                       ):
                         (<span></span>)
                     }
 
@@ -76,7 +76,6 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps=(dispatch)=>{
     return{
         signOut:()=>{
-            console.log("Running the dispatch");
             dispatch(signOut())
         }
 

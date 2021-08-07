@@ -1,0 +1,17 @@
+.video_container
+{
+    border-top: 5px solid black;
+    padding-top: 20px;
+    margin-top: 40px;
+
+    .no_video_statement{
+        font-size: 150px;
+        margin-top: 20vh;
+        text-align: center;
+
+        @media only screen and (max-width:800px){
+            font-size: 50px;
+            margin-top: 40vh;
+        }
+    }
+}
