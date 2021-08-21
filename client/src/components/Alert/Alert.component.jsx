@@ -1,6 +1,7 @@
 import Alert from 'react-bootstrap/Alert';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
+import {useState} from 'react-redux';
 
 const AlertMessage=({setAlertInfo,alertInfo,ActionFunction,type='danger'})=>{
 
