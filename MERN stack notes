@@ -1,0 +1,207 @@
+STARTING OF A PROJECT ->>>>    create a folder like (Ecommerce app).   Go inside that folder and do "npm init".  This wil initialise a git repository inside that folder and 									make package.json fike for you.   Later inside this folder run the command "npx create-react-app client".   This will create a client folder
+								and will make a react-app inside this client directory.
+								Make a file index.js in the roll of Ecommerce App.
+
+
+
+
+Things to set-up a basic ->>>  install these libraries -> express , body-parser , mongoose , dotenv
+backend API Connected with     Go to mongodb atlas. Create a new project. Then create a new free cluster in it.Click connect to you application and then click "Add your 
+Mongoose and env file		   current IP" and then click "connect". Afte  that click the "connect to your application" and copy the code provided.
+											Put this code to make a server at port 8000. Don't forget to chage the pass and db name in the mongodb URL.
+
+										    const express=require("express");
+											const bodyparser = require('body-parser');
+											const mongoose=require('mongoose');
+											const app=express(); 
+										
+
+										    // establishing connection with mongodb
+											if(process.env.NODE_ENV!='production') require('dotenv').config()
+											const url=process.env.MONGODB_URL
+											const connectionParams={
+											    useNewUrlParser: true,
+											    useUnifiedTopology: true 
+											}
+											mongoose.connect(url,connectionParams)
+											    .then( () => {
+											        console.log('Connected to database ')
+											    })
+											    .catch( (err) => {
+											        console.error(`Error connecting to the database. \n${err}`);
+											    })
+
+											app.use(bodyparser.json()) 
+											app.use(bodyparser.urlencoded({extended:true}))
+											app.get('',(req,res)=>{
+											    res.status(200).json({
+											        message:'got there successfully'
+											    })
+											})
+											const port = process.env.PORT || 8000
+											app.listen(port); 
+
+
+
+
+
+
+
+***********************************  YOUR BASIC NODE APPLICATION IS READY TILL NOW. NOW MAKE YOUR TABLES IN DB , AND YOUR ROUTES, AND FRONTEND     ***************************
+
+
+Add User Authentication by  ->>>>  install bcrypt , jsonwebtoken libraries. Make your modals folder and inside that make your user schema file. Also make a Router folder
+Email and PAssword and making      and also make the SingIn_SignUp.js file inside it and paste this code inside it. Don't forget to add 'SECRET_KEY_JWT' in .env file
+Auth middleware
+									const express=require('express');
+									const router = express.Router();
+									const mongoose=require('mongoose');
+									const bcrypt=require('bcrypt');
+									const User=require('../modals/user');
+									const jwt=require('jsonwebtoken');
+
+									router.post('/signup',(req,res)=>{
+									    const {email,password,firstName,lastName}=req.body;
+									    User.find({email:email})
+									    .then(user =>{
+									        if(user.length>=1){res.status(409).json({message:'User Already Exists'})}
+									        else{
+									            bcrypt.hash(password,10,(err,hash)=>{
+									                if(err){res.status(500).json({message:'Internal Server Error'})}
+									                else{
+									                    const user_details={email:email,password:hash,firstName:firstName,lastName:lastName}
+									                    const user=new User(user_details)
+									                    user.save()
+									                    .then(new_user=>{
+									                        const jwt_token=jwt.sign({email:email,firstName:firstName},process.env.SECRET_KEY_JWT, {expiresIn: '1h'});
+									                        res.status(201).json({
+									                            token:jwt_token,
+									                            firstName:firstName,
+									                            user_id:new_user._id
+									                        });
+									                    })
+									                    .catch(err=>{
+									                        res.status(422).json({message:'Internal Database Error'})
+									                    })   
+									                }
+									            })
+									        }
+									    })
+									    .catch(err=>{
+									        res.status(500).send({message:'Internal Server Error'});
+									    })
+									})
+
+									router.post('/signin',(req,res)=>{
+									    const {email,password}=req.body
+									    User.find({email:email})
+									    .then(user =>{
+									        if(user.length==0){res.status(401).json({message:'Wrong Usernme Or Password'})} // here donot send email donot exist,,because it might be helpful to hackers
+									        else{
+									            const hash=user[0].password
+									            bcrypt.compare(password, hash,(err, result)=>{
+									                if(result==true)
+									                {
+									                    const jwt_token=jwt.sign({email:email,firstName:user[0].firstName},process.env.SECRET_KEY_JWT, {expiresIn: '1h'});
+									                    res.status(200).json({
+									                        token:jwt_token,
+									                        firstName:user[0].firstName,
+									                        user_id:user[0]._id
+									                    });
+									                }
+									                else {res.status(401).send({message:'Wrong Username Or Password'})};
+									                });
+									        }
+									    })
+									    .catch(err=>{
+									        console.log("This error",err);
+									        res.status(500).json({message:'Internal Server Error'})
+									    })
+									})
+
+									module.exports=router;
+
+
+
+
+						---->>>>>>>	Make middlewares directory and inside it make Auth.js file and paste this code in it.
+
+									const jwt=require('jsonwebtoken')
+									const checkAuth = (req,res,next)=>{
+									    const authHeader = req.headers.authorization;
+
+									    if (authHeader) {
+									        const token = authHeader.split(' ')[1];
+
+									        jwt.verify(token, process.env.SECRET_KEY_JWT, (err, user) => {
+									            if (err) {
+									                return res.status(403).send({message:'Forbidden 403'});
+									            }
+									            req.user = user;
+									            next();
+									        });
+									    } else {
+									        res.status(401).send({message:'Unautorised'});
+									    }
+									}
+
+									module.exports={checkAuth};
+
+
+
+
+
+
+
+
+*****************************************************************************  FRONTEND (REACT) NOTES *************************************************************************
+
+ YOU KNOW HOW TO SETUP BASIC REACT APP    --->>>>>>>   install "react-redux" , "redux-persist" , "redux-logger" , "sass" , 'react-router-dom'
+ ....NOW WE LEARN HOW TO CONNECT TO STORE			   Make a forlder 'redux' ,, and inside it make another forlder for which you want to maka reduer,actions and action types.
+  i.e. USING REDUX FOR STATE MANAGEMENT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+***************************************************************************** Allow Cross origin requests *******************************************************************
+			a) go to package.json file of client and add proxy there like this -> "proxy": "http://localhost:8000"
+			b) add CORS module into node modules of backend.
+			c) go to index.js of backend and add these 2 lines ->  const cors= require('cors');			app.use(cors());
